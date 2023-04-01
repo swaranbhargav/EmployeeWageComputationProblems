@@ -6,15 +6,11 @@ public class EmployeeWageComputationProblems {
 
 	public static final int IS_FULL_TIME = 1;
 	public static final int IS_PART_TIME = 2;
-	public static final int EMP_RATE_PER_HOUR = 20;
-	public static final int MAX_HRS_IN_MONTHS = 100;
 
-	public static int empHrs = 0, totalWorkingDays = 0, totalEmpHrs = 0;
-	public static int numOfWorkingDays = 20;
-
-	private static void wageComputation() {
+	private static void wageComputation(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMont) {
+		int empHrs = 0, totalWorkingDays = 0, totalEmpHrs = 0;
 		Random random = new Random();
-		while (totalEmpHrs < MAX_HRS_IN_MONTHS && totalWorkingDays < numOfWorkingDays) {
+		while (totalEmpHrs < maxHoursPerMont && totalWorkingDays < numOfWorkingDays) {
 			int empCheck = (int) Math.floor(Math.random() * 10) % 3;
 			switch (empCheck) {
 			case IS_FULL_TIME:
@@ -28,12 +24,13 @@ public class EmployeeWageComputationProblems {
 			totalEmpHrs = totalEmpHrs + empHrs;
 		}
 
-		int empWage = totalEmpHrs * EMP_RATE_PER_HOUR;
-		System.out.println("Employee Wage is : " + empWage);
+		int empWage = totalEmpHrs * empRatePerHour;
+		System.out.println("Employee Wage for company " + company + " is : " + empWage);
 	}
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Employee Wage Computation Program on Master Branch");
-		wageComputation();
+		wageComputation("dMArt", 20, 2, 10);
+		wageComputation("Reliance", 30, 4, 14);
 	}
 }
