@@ -2,62 +2,65 @@ package com.bridgelabz.employeewagecomputationproblems;
 
 import java.util.Random;
 
-public class EmployeeWageComputationProblems {
+interface InterfaceComputeEmpWage {
+	public void addCompanyEmpWage(String company, int empRatePerHours, int numOfWorkingDays, int maxHoursPerMonth);
 
-	public static final int IS_PART_TIME = 1;
-	public static final int IS_FULL_TIME = 2;
+	public void computeEmpWage();
 
-	private final String company;
-	private final int empRatePerHour;
-	private final int numOfWorkingDays;
-	private final int maxHoursPerMonth;
-	private int totalEmpWage;
+	public class EmployeeWageComputationProblems implements InterfaceComputeEmpWage {
 
-	public EmployeeWageComputationProblems(String company, int empRatePerHour, int numOfWorkingDays,
-			int maxHoursPerMonth) {
-		this.company = company;
-		this.empRatePerHour = empRatePerHour;
-		this.numOfWorkingDays = numOfWorkingDays;
-		this.maxHoursPerMonth = maxHoursPerMonth;
-	}
+		public static final int IS_PART_TIME = 1;
+		public static final int IS_FULL_TIME = 2;
 
-	public void computeEmpWage() {
+		private int numOfCompany = 0;
+		private CompanyEmpWage[] companyEmpWageArray;
 
-		int empHrs = 0;
-		int totalEmpHrs = 0;
-		int totalWorkingDays = 0;
-
-		while (totalEmpHrs <= maxHoursPerMonth && totalWorkingDays < numOfWorkingDays) {
-			totalWorkingDays++;
-			int empCheck = (int) Math.floor(Math.random() * 10) % 3;
-			switch (empCheck) {
-			case IS_PART_TIME:
-				empHrs = 4;
-				break;
-			case IS_FULL_TIME:
-				empHrs = 8;
-				break;
-			default:
-				empHrs = 0;
-			}
-			totalEmpHrs += empHrs;
-			System.out.println("Day: " + totalWorkingDays + "working hours: " + empHrs);
+		public EmployeeWageComputationProblems() {
+			companyEmpWageArray = new CompanyEmpWage[5];
 		}
-		totalEmpWage = totalEmpHrs * empRatePerHour;
-	}
 
-	@Override
-	public String toString() {
-		return "Total employee wage for " + company + " is " + totalEmpWage + "\n";
-	}
+		public void addCompanyEmpWage(String company, int empRatePerHours, int numOfWorkingDays, int maxHoursPerMonth) {
+			companyEmpWageArray[numOfCompany] = new CompanyEmpWage(company, empRatePerHours, numOfWorkingDays,
+					maxHoursPerMonth);
+			numOfCompany++;
+		}
 
-	public static void main(String[] args) {
-		System.out.println("\n" + "Employee wage program to save total employee wage for each company.\n");
-		EmployeeWageComputationProblems dmart = new EmployeeWageComputationProblems("DMart", 20, 2, 10);
-		EmployeeWageComputationProblems walmart = new EmployeeWageComputationProblems("Walmart", 10, 4, 20);
-		dmart.computeEmpWage();
-		System.out.println(dmart);
-		walmart.computeEmpWage();
-		System.out.println(walmart);
+		public void computeEmpWage() {
+			for (int i = 0; i < numOfCompany; i++) {
+				companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
+				System.out.println(companyEmpWageArray[i]);
+			}
+		}
+
+		private int computeEmpWage(CompanyEmpWage companyEmpWage) {
+
+			int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
+
+			while (totalEmpHrs <= companyEmpWage.getMaxHoursPerMonth()
+					&& totalWorkingDays < companyEmpWage.getNumOfWorkingDays()) {
+				totalWorkingDays++;
+				int empCheck = (int) Math.floor(Math.random() * 10) % 3;
+				switch (empCheck) {
+				case IS_PART_TIME:
+					empHrs = 8;
+					break;
+				case IS_FULL_TIME:
+					empHrs = 12;
+					break;
+				default:
+					empHrs = 0;
+				}
+				totalEmpHrs += empHrs;
+				System.out.println("Day: " + totalWorkingDays + " ... " + "Employee Hours: " + empHrs);
+			}
+			return totalEmpHrs * companyEmpWage.getEmpRatePerHours();
+		}
+
+		public static void main(String[] args) {
+			EmployeeWageComputationProblems empWageBuilder = new EmployeeWageComputationProblems();
+			empWageBuilder.addCompanyEmpWage("DMart", 20, 20, 40);
+			empWageBuilder.addCompanyEmpWage("Walmart", 20, 30, 50);
+		}
+
 	}
 }

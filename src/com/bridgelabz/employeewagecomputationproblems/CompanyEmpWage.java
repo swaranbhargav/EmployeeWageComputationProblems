@@ -1,43 +1,57 @@
 package com.bridgelabz.employeewagecomputationproblems;
 
 public class CompanyEmpWage {
+	public final String company;
+	public final int empRatePerHours;
+	public final int numOfWorkingDays;
+	public final int maxHoursPerMonth;
+	public int totalEmpWage;
 
-	private final String companyName;
-	private final int wagePerHour;
-	private final int maxWorkingDays;
-	private final int maxWorkingHours;
-	private int totalWage;
+	public CompanyEmpWage(String company, int empRatePerHours, int numOfWorkingDays, int maxHoursPerMonth) {
+		this.company = company;
+		this.empRatePerHours = empRatePerHours;
+		this.numOfWorkingDays = numOfWorkingDays;
+		this.maxHoursPerMonth = maxHoursPerMonth;
+	}
+	
 
-	public CompanyEmpWage(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
-		this.companyName = companyName;
-		this.wagePerHour = wagePerHour;
-		this.maxWorkingDays = maxWorkingDays;
-		this.maxWorkingHours = maxWorkingHours;
-		this.totalWage = 0;
+	public String getCompany() {
+		return company;
 	}
 
-	public void setTotalWage(int totalWage) {
-		this.totalWage = totalWage;
+
+	public int getEmpRatePerHours() {
+		return empRatePerHours;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+
+	public int getNumOfWorkingDays() {
+		return numOfWorkingDays;
 	}
 
-	public int getWagePerHour() {
-		return wagePerHour;
+
+	public int getMaxHoursPerMonth() {
+		return maxHoursPerMonth;
 	}
 
-	public int getMaxWorkingDays() {
-		return maxWorkingDays;
+
+	public int getTotalEmpWage() {
+		return totalEmpWage;
 	}
 
-	public int getMaxWorkingHours() {
-		return maxWorkingHours;
+
+	public void setTotalEmpWage(int totalEmpWage) {
+		this.totalEmpWage = totalEmpWage;
 	}
 
-	public int getTotalWage() {
-		return totalWage;
+	@Override
+	public String toString() {
+		return "Total Employee Wage for Company:" + company + " is: " + totalEmpWage + "\n";
 	}
 
+
+
+
+		
+	
 }
